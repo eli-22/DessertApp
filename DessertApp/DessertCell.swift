@@ -24,15 +24,12 @@ struct DessertCell: View {
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 120, height: 90)
                     .cornerRadius(8)
-                    
             }
             Text(dessert.strMeal)
                 .font(.title2)
                 .fontWeight(.medium)
                 .padding(.leading, 10)
-            
         }
-            
     }
 }
 

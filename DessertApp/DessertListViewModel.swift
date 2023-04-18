@@ -19,6 +19,7 @@ final class DessertListViewModel: ObservableObject {
     // Will have value once user clicks on a dessert cell.
     @Published var selectedDessert: Dessert?
     
+    // Alert user in case of server error.
     @Published var alertItem: AlertItem?
     
     func getDessertList() {

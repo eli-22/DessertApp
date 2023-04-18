@@ -16,7 +16,7 @@ struct AlertItem: Identifiable {
 
 struct AlertContext {
     static let invalidData = AlertItem(title: Text("Server Error"),
-                                       message: Text("The data received from the server was invalid. Please contact support."),
+                                       message: Text("Invalid data received from server. Please contact support."),
                                        dismissButton: .default(Text("Dismiss")))
     static let invalidResponse = AlertItem(title: Text("Server Error"),
                                            message: Text("Invalid response from server. Please try again later or contact support."),

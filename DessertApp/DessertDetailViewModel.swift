@@ -5,7 +5,7 @@
 //  Created by Elise on 4/16/23.
 //
 
-import Foundation
+import SwiftUI
 
 @MainActor
 class DessertDetailViewModel: ObservableObject {
@@ -19,87 +19,17 @@ class DessertDetailViewModel: ObservableObject {
     // This will the the first (and only) object in the "meals" array.
     var dessertDetail: DessertDetail?
     
-    var ingredientArray: [String] = []
-    var measurementArray: [String] = []
-    var ingredientMeasurements: [String : String] = [:]
+    // Array of tuples (rather than a dictionary) to maintain the order of ingredients when displayed.
+    var ingredientMeasurements: [(String, String)] = []
     
     // Show spinner while data loads.
     @Published var isLoading = false
     
+    // Alert user in case of server error.
     @Published var alertItem: AlertItem?
     
     init(selectedDessert: Dessert) {
         self.selectedDessert = selectedDessert
-    }
-    
-    func getIngredients(dessertDetail: DessertDetail) {
-        var allIngredientValues: [String?] = []
-        
-        allIngredientValues.append(dessertDetail.strIngredient1)
-        allIngredientValues.append(dessertDetail.strIngredient2)
-        allIngredientValues.append(dessertDetail.strIngredient3)
-        allIngredientValues.append(dessertDetail.strIngredient4)
-        allIngredientValues.append(dessertDetail.strIngredient5)
-        allIngredientValues.append(dessertDetail.strIngredient6)
-        allIngredientValues.append(dessertDetail.strIngredient7)
-        allIngredientValues.append(dessertDetail.strIngredient8)
-        allIngredientValues.append(dessertDetail.strIngredient9)
-        allIngredientValues.append(dessertDetail.strIngredient10)
-        allIngredientValues.append(dessertDetail.strIngredient11)
-        allIngredientValues.append(dessertDetail.strIngredient12)
-        allIngredientValues.append(dessertDetail.strIngredient13)
-        allIngredientValues.append(dessertDetail.strIngredient14)
-        allIngredientValues.append(dessertDetail.strIngredient15)
-        allIngredientValues.append(dessertDetail.strIngredient16)
-        allIngredientValues.append(dessertDetail.strIngredient17)
-        allIngredientValues.append(dessertDetail.strIngredient18)
-        allIngredientValues.append(dessertDetail.strIngredient19)
-        allIngredientValues.append(dessertDetail.strIngredient20)
-        
-        var ingredients = allIngredientValues.compactMap { element in
-            return element
-        }
-        
-        ingredientArray = ingredients.map { $0.capitalized }
-        print(ingredientArray)
-    }
-    
-    func getMeasurements(dessertDetail: DessertDetail) {
-        var allMeasurementValues: [String?] = []
-        
-        allMeasurementValues.append(dessertDetail.strMeasure1)
-        allMeasurementValues.append(dessertDetail.strMeasure2)
-        allMeasurementValues.append(dessertDetail.strMeasure3)
-        allMeasurementValues.append(dessertDetail.strMeasure4)
-        allMeasurementValues.append(dessertDetail.strMeasure5)
-        allMeasurementValues.append(dessertDetail.strMeasure6)
-        allMeasurementValues.append(dessertDetail.strMeasure7)
-        allMeasurementValues.append(dessertDetail.strMeasure8)
-        allMeasurementValues.append(dessertDetail.strMeasure9)
-        allMeasurementValues.append(dessertDetail.strMeasure10)
-        allMeasurementValues.append(dessertDetail.strMeasure11)
-        allMeasurementValues.append(dessertDetail.strMeasure12)
-        allMeasurementValues.append(dessertDetail.strMeasure13)
-        allMeasurementValues.append(dessertDetail.strMeasure14)
-        allMeasurementValues.append(dessertDetail.strMeasure15)
-        allMeasurementValues.append(dessertDetail.strMeasure16)
-        allMeasurementValues.append(dessertDetail.strMeasure17)
-        allMeasurementValues.append(dessertDetail.strMeasure18)
-        allMeasurementValues.append(dessertDetail.strMeasure19)
-        allMeasurementValues.append(dessertDetail.strMeasure20)
-        
-        measurementArray = allMeasurementValues.compactMap { element in
-            return element
-        }
-    }
-    
-    func createIngredientList() {
-        for i in 0..<ingredientArray.count {
-            if !ingredientArray[i].isEmpty {
-                ingredientMeasurements.updateValue(measurementArray[i], forKey: ingredientArray[i])
-            }
-        }
-        print(ingredientMeasurements)
     }
     
     func getDessertDetails() {
@@ -111,8 +41,6 @@ class DessertDetailViewModel: ObservableObject {
                 dessertDetail = dessertResponse.first
                 if let dessertDetail = dessertResponse.first {
                     getIngredients(dessertDetail: dessertDetail)
-                    getMeasurements(dessertDetail: dessertDetail)
-                    createIngredientList()
                 }
                 isLoading = false
                 
@@ -135,5 +63,62 @@ class DessertDetailViewModel: ObservableObject {
                 isLoading = false
             }
         }
+    }
+    
+    func getIngredients(dessertDetail: DessertDetail) {
+        
+        var allIngredientValues: [(String?, String?)] = []
+        
+        allIngredientValues.append(contentsOf: [
+            (dessertDetail.strIngredient1, dessertDetail.strMeasure1),
+            (dessertDetail.strIngredient2, dessertDetail.strMeasure2),
+            (dessertDetail.strIngredient3, dessertDetail.strMeasure3),
+            (dessertDetail.strIngredient4, dessertDetail.strMeasure4),
+            (dessertDetail.strIngredient5, dessertDetail.strMeasure5),
+            (dessertDetail.strIngredient6, dessertDetail.strMeasure6),
+            (dessertDetail.strIngredient7, dessertDetail.strMeasure7),
+            (dessertDetail.strIngredient8, dessertDetail.strMeasure8),
+            (dessertDetail.strIngredient9, dessertDetail.strMeasure9),
+            (dessertDetail.strIngredient10, dessertDetail.strMeasure10),
+            (dessertDetail.strIngredient11, dessertDetail.strMeasure11),
+            (dessertDetail.strIngredient12, dessertDetail.strMeasure12),
+            (dessertDetail.strIngredient13, dessertDetail.strMeasure13),
+            (dessertDetail.strIngredient14, dessertDetail.strMeasure14),
+            (dessertDetail.strIngredient15, dessertDetail.strMeasure15),
+            (dessertDetail.strIngredient16, dessertDetail.strMeasure16),
+            (dessertDetail.strIngredient17, dessertDetail.strMeasure17),
+            (dessertDetail.strIngredient18, dessertDetail.strMeasure18),
+            (dessertDetail.strIngredient19, dessertDetail.strMeasure19),
+            (dessertDetail.strIngredient20, dessertDetail.strMeasure20)])
+        
+        // Delete tuples with nil or empty ingredient values from ingredient array.
+        let nonNilNonEmptyIngredients = allIngredientValues.filter { $0.0 != nil && $0.0 != "" }
+        
+        // Capitalize ingredients, display missing measurement message if needed.
+        ingredientMeasurements = formatOutput(ingredientArray: nonNilNonEmptyIngredients)
+        print(ingredientMeasurements)
+    }
+    
+    // I did not filter measurement values here in case there is a listed ingredient without a corresponding measurement. I think it's better to leave the ingredient on the list with no measurement value than to delete it entirely, so I changed nil or empty measurements to a "No measurement specified" message.
+    
+    func formatOutput(ingredientArray: [(String?, String?)]) -> [(String, String)] {
+        
+        var formattedOutput: [(String, String)] = []
+        
+        // Display messsage if ingredient has no corresponding measurement.
+        for i in 0..<ingredientArray.count {
+            let tuple: (String, String)
+            tuple.0 = ingredientArray[i].0 ?? "" // Nil values have already been filtered out.
+            if ingredientArray[i].1 == "" {
+                tuple.1 = "No measurement specified."
+            } else {
+                tuple.1 = ingredientArray[i].1 ?? "No measurement specified."
+            }
+            formattedOutput.append(tuple)
+        
+        }
+        // Capitalize ingredients.
+        formattedOutput = formattedOutput.map { ($0.0.capitalized, $0.1) }
+        return formattedOutput
     }
 }

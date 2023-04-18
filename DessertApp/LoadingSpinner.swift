@@ -14,9 +14,8 @@ struct LoadingSpinner: View  {
                 .ignoresSafeArea()
             
             ProgressView()
-                .progressViewStyle(CircularProgressViewStyle())
-                //.progressViewStyle(CircularProgressViewStyle(tint: .brandPrimary))
-                .scaleEffect(2)
+                .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
+                .scaleEffect(3)
         }
     }
 }

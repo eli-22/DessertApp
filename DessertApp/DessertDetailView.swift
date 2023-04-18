@@ -30,46 +30,35 @@ struct DessertDetailView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fit)
                             .cornerRadius(8)
-                    }.padding()
-                    
-                    Text("Instructions")
-                        .foregroundColor(.accentColor)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.bottom)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                
-                    Text(dessertDetailVM.dessertDetail?.strInstructions ?? "No instructions provided.")
-                        .padding(.bottom)
+                    }
                     
                     Text("Ingredients")
                         .foregroundColor(.accentColor)
                         .font(.title2)
                         .fontWeight(.bold)
-                        .padding(.bottom)
+                        .padding([.top, .bottom])
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        
-                    HStack {
-                        VStack {
-                            ForEach(Array(dessertDetailVM.ingredientMeasurements.keys), id: \.self) { key in
-                                HStack {
-                                    Text(key)
-                                    Spacer()
-                                }
-                                .padding(.bottom, 1)
-                            }
-                        }
-                        VStack {
-                            ForEach(Array(dessertDetailVM.ingredientMeasurements.keys), id: \.self) { key in
-                                HStack {
-                                    Text("\(dessertDetailVM.ingredientMeasurements[key] ?? "")")
-                                    Spacer()
-                                }
-                                .padding(.bottom, 1)
-                            }
-                        }
-                    }
                     
+                    ForEach(dessertDetailVM.ingredientMeasurements, id:\.0) { tuple in
+                        HStack {
+                            Text("\(tuple.0): ")
+                                .fontWeight(.medium)
+                            Text(tuple.1)
+                            Spacer()
+                        }
+                    }.padding(.bottom, 2)
+                    
+                    Text("Instructions")
+                        .foregroundColor(.accentColor)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding([.top,.bottom])
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                
+                    Text(dessertDetailVM.dessertDetail?.strInstructions ?? "No instructions provided.")
+                        .font(.body)
+                        .fontWeight(.medium)
+                        .padding(.bottom)
                 }
                 .padding()
                 .task {
