@@ -40,12 +40,14 @@ class DessertDetailViewModel: ObservableObject {
                 dessertResponse = try await NetworkManager.shared.getDessertDetail(mealID: selectedDessert.idMeal)
                 dessertDetail = dessertResponse.first
                 if let dessertDetail = dessertResponse.first {
-                    getIngredients(dessertDetail: dessertDetail)
+                    let allIngredientValues = getIngredients(dessertDetail: dessertDetail)
+                    let nonNilNonEmptyIngredients = removeNilOrEmptyIngredients(allIngredients: allIngredientValues)
+                    let formattedOutput = formatOutput(ingredientArray: nonNilNonEmptyIngredients)
+                    ingredientMeasurements = formattedOutput
+                    print(ingredientMeasurements)
                 }
                 isLoading = false
-                
             } catch {
-                
                 if let error = error as? DessertAppError {
                     switch error {
                     case .invalidURL:
@@ -65,7 +67,7 @@ class DessertDetailViewModel: ObservableObject {
         }
     }
     
-    func getIngredients(dessertDetail: DessertDetail) {
+    func getIngredients(dessertDetail: DessertDetail) -> [(String?, String?)] {
         
         var allIngredientValues: [(String?, String?)] = []
         
@@ -91,16 +93,17 @@ class DessertDetailViewModel: ObservableObject {
             (dessertDetail.strIngredient19, dessertDetail.strMeasure19),
             (dessertDetail.strIngredient20, dessertDetail.strMeasure20)])
         
-        // Delete tuples with nil or empty ingredient values from ingredient array.
-        let nonNilNonEmptyIngredients = allIngredientValues.filter { $0.0 != nil && $0.0 != "" }
-        
-        // Capitalize ingredients, display missing measurement message if needed.
-        ingredientMeasurements = formatOutput(ingredientArray: nonNilNonEmptyIngredients)
-        print(ingredientMeasurements)
+        return allIngredientValues
     }
     
-    // I did not filter measurement values here in case there is a listed ingredient without a corresponding measurement. I think it's better to leave the ingredient on the list with no measurement value than to delete it entirely, so I changed nil or empty measurements to a "No measurement specified" message.
+    // Delete tuples with nil or empty ingredient values from ingredient array.
+    func removeNilOrEmptyIngredients(allIngredients: [(String?, String?)]) -> [(String?, String?)] {
+        let filteredArray = allIngredients.filter { $0.0 != nil && $0.0 != "" }
+        return filteredArray
+    }
     
+    // Capitalize ingredients, display missing measurement message if needed.
+    // I did not filter measurement values here in case there is a listed ingredient without a corresponding measurement. I think it's better to leave the ingredient on the list with no measurement value than to delete it entirely, so I changed nil or empty measurements to a "No measurement specified" message.
     func formatOutput(ingredientArray: [(String?, String?)]) -> [(String, String)] {
         
         var formattedOutput: [(String, String)] = []
@@ -115,8 +118,8 @@ class DessertDetailViewModel: ObservableObject {
                 tuple.1 = ingredientArray[i].1 ?? "No measurement specified."
             }
             formattedOutput.append(tuple)
-        
         }
+        
         // Capitalize ingredients.
         formattedOutput = formattedOutput.map { ($0.0.capitalized, $0.1) }
         return formattedOutput

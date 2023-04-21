@@ -15,7 +15,7 @@ struct DessertDetailView: View {
         ZStack {
             ScrollView (.vertical, showsIndicators: false) {
                 VStack {
-                    Text(dessertDetailVM.dessertDetail?.strMeal ?? MockData.mockDessertDetail.strMeal)
+                    Text(dessertDetailVM.selectedDessert.strMeal)
                         .foregroundColor(.accentColor)
                         .font(.largeTitle)
                         .fontWeight(.bold)
@@ -39,11 +39,12 @@ struct DessertDetailView: View {
                         .padding([.top, .bottom])
                         .frame(maxWidth: .infinity, alignment: .leading)
                     
-                    ForEach(dessertDetailVM.ingredientMeasurements, id:\.0) { tuple in
+                    ForEach(0..<dessertDetailVM.ingredientMeasurements.count, id:\.self) { index in
+                        let array = dessertDetailVM.ingredientMeasurements
                         HStack {
-                            Text("\(tuple.0): ")
+                            Text("\(array[index].0): ")
                                 .fontWeight(.medium)
-                            Text(tuple.1)
+                            Text(array[index].1)
                             Spacer()
                         }
                     }.padding(.bottom, 2)

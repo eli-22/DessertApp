@@ -11,15 +11,15 @@ final class NetworkManager {
     static let shared = NetworkManager()
     
     let dessertListURL = "https://themealdb.com/api/json/v1/1/filter.php?c=Dessert"
-    // static? private?
+    
     let dessertDetailBaseURL = "https://themealdb.com/api/json/v1/1/lookup.php?i="
     
     @Published var alertItem: AlertItem?
     
     private init() {}
     
-    func getDessertList() async throws -> [Dessert] {
-        guard let url = URL(string: dessertListURL) else {
+    func getDessertList(url: String) async throws -> [Dessert] {
+        guard let url = URL(string: url) else {
             throw DessertAppError.invalidURL
         }
         

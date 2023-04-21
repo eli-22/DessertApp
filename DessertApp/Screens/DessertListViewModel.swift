@@ -27,7 +27,7 @@ final class DessertListViewModel: ObservableObject {
         
         Task {
             do {
-                let desserts = try await NetworkManager.shared.getDessertList()
+                let desserts = try await NetworkManager.shared.getDessertList(url: NetworkManager.shared.dessertListURL)
                 sortedDesserts = desserts.sorted { $0.strMeal < $1.strMeal }
                 isLoading = false
             } catch {
