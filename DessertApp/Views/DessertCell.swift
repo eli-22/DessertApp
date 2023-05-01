@@ -12,7 +12,7 @@ struct DessertCell: View {
     
     var body: some View {
         HStack {
-            AsyncImage(url: URL(string: dessert.strMealThumb)) { image in
+            AsyncImage(url: URL(string: dessert.imageURL)) { image in
                 image
                     .resizable()
                     .aspectRatio(contentMode: .fit)
@@ -25,7 +25,7 @@ struct DessertCell: View {
                     .frame(width: 120, height: 90)
                     .cornerRadius(8)
             }
-            Text(dessert.strMeal)
+            Text(dessert.mealName)
                 .font(.title2)
                 .fontWeight(.medium)
                 .padding(.leading, 10)

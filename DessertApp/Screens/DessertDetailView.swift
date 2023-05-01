@@ -15,12 +15,12 @@ struct DessertDetailView: View {
         ZStack {
             ScrollView (.vertical, showsIndicators: false) {
                 VStack {
-                    Text(dessertDetailVM.selectedDessert.strMeal)
+                    Text(dessertDetailVM.selectedDessert.mealName)
                         .foregroundColor(.accentColor)
                         .font(.largeTitle)
                         .fontWeight(.bold)
                     
-                    AsyncImage(url: URL(string: dessertDetailVM.selectedDessert.strMealThumb)) { image in
+                    AsyncImage(url: URL(string: dessertDetailVM.selectedDessert.imageURL)) { image in
                         image
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -56,7 +56,7 @@ struct DessertDetailView: View {
                         .padding([.top,.bottom])
                         .frame(maxWidth: .infinity, alignment: .leading)
                 
-                    Text(dessertDetailVM.dessertDetail?.strInstructions ?? "No instructions provided.")
+                    Text(dessertDetailVM.dessertDetail?.instructions ?? "No instructions provided.")
                         .font(.body)
                         .fontWeight(.medium)
                         .padding(.bottom)

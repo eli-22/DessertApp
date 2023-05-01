@@ -20,9 +20,6 @@ struct DessertListView: View {
                             destination: DessertDetailView(
                                 dessertDetailVM: DessertDetailViewModel(selectedDessert: dessert))) {
                                     DessertCell(dessert: dessert)
-                                        .onTapGesture {
-                                            dessertListVM.selectedDessert = dessert
-                                        }
                                 }
                     }
                 }

@@ -37,7 +37,7 @@ class DessertDetailViewModel: ObservableObject {
         
         Task {
             do {
-                dessertResponse = try await NetworkManager.shared.getDessertDetail(mealID: selectedDessert.idMeal)
+                dessertResponse = try await NetworkManager.shared.getDessertDetail(mealID: selectedDessert.mealID)
                 dessertDetail = dessertResponse.first
                 if let dessertDetail = dessertResponse.first {
                     let allIngredientValues = getIngredients(dessertDetail: dessertDetail)
@@ -72,26 +72,26 @@ class DessertDetailViewModel: ObservableObject {
         var allIngredientValues: [(String?, String?)] = []
         
         allIngredientValues.append(contentsOf: [
-            (dessertDetail.strIngredient1, dessertDetail.strMeasure1),
-            (dessertDetail.strIngredient2, dessertDetail.strMeasure2),
-            (dessertDetail.strIngredient3, dessertDetail.strMeasure3),
-            (dessertDetail.strIngredient4, dessertDetail.strMeasure4),
-            (dessertDetail.strIngredient5, dessertDetail.strMeasure5),
-            (dessertDetail.strIngredient6, dessertDetail.strMeasure6),
-            (dessertDetail.strIngredient7, dessertDetail.strMeasure7),
-            (dessertDetail.strIngredient8, dessertDetail.strMeasure8),
-            (dessertDetail.strIngredient9, dessertDetail.strMeasure9),
-            (dessertDetail.strIngredient10, dessertDetail.strMeasure10),
-            (dessertDetail.strIngredient11, dessertDetail.strMeasure11),
-            (dessertDetail.strIngredient12, dessertDetail.strMeasure12),
-            (dessertDetail.strIngredient13, dessertDetail.strMeasure13),
-            (dessertDetail.strIngredient14, dessertDetail.strMeasure14),
-            (dessertDetail.strIngredient15, dessertDetail.strMeasure15),
-            (dessertDetail.strIngredient16, dessertDetail.strMeasure16),
-            (dessertDetail.strIngredient17, dessertDetail.strMeasure17),
-            (dessertDetail.strIngredient18, dessertDetail.strMeasure18),
-            (dessertDetail.strIngredient19, dessertDetail.strMeasure19),
-            (dessertDetail.strIngredient20, dessertDetail.strMeasure20)])
+            (dessertDetail.ingredient1, dessertDetail.measurement1),
+            (dessertDetail.ingredient2, dessertDetail.measurement2),
+            (dessertDetail.ingredient3, dessertDetail.measurement3),
+            (dessertDetail.ingredient4, dessertDetail.measurement4),
+            (dessertDetail.ingredient5, dessertDetail.measurement5),
+            (dessertDetail.ingredient6, dessertDetail.measurement6),
+            (dessertDetail.ingredient7, dessertDetail.measurement7),
+            (dessertDetail.ingredient8, dessertDetail.measurement8),
+            (dessertDetail.ingredient9, dessertDetail.measurement9),
+            (dessertDetail.ingredient10, dessertDetail.measurement10),
+            (dessertDetail.ingredient11, dessertDetail.measurement11),
+            (dessertDetail.ingredient12, dessertDetail.measurement12),
+            (dessertDetail.ingredient13, dessertDetail.measurement13),
+            (dessertDetail.ingredient14, dessertDetail.measurement14),
+            (dessertDetail.ingredient15, dessertDetail.measurement15),
+            (dessertDetail.ingredient16, dessertDetail.measurement16),
+            (dessertDetail.ingredient17, dessertDetail.measurement17),
+            (dessertDetail.ingredient18, dessertDetail.measurement18),
+            (dessertDetail.ingredient19, dessertDetail.measurement19),
+            (dessertDetail.ingredient20, dessertDetail.measurement20)])
         
         return allIngredientValues
     }

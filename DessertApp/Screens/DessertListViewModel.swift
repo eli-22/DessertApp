@@ -16,9 +16,6 @@ final class DessertListViewModel: ObservableObject {
     // Show spinner while data loads.
     @Published var isLoading = false
     
-    // Will have value once user clicks on a dessert cell.
-    @Published var selectedDessert: Dessert?
-    
     // Alert user in case of server error.
     @Published var alertItem: AlertItem?
     
@@ -28,7 +25,7 @@ final class DessertListViewModel: ObservableObject {
         Task {
             do {
                 let desserts = try await NetworkManager.shared.getDessertList(url: NetworkManager.shared.dessertListURL)
-                sortedDesserts = desserts.sorted { $0.strMeal < $1.strMeal }
+                sortedDesserts = desserts.sorted { $0.mealName < $1.mealName }
                 isLoading = false
             } catch {
                 if let error = error as? DessertAppError {
